@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-adsense-account" content="ca-pub-5052664655781553">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5052664655781553"
+     crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#FFF9F3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="FeedSafe">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiBmaWxsPSIjRkZGOUYzIi8+PHRleHQgeD0iOTAiIHk9IjExNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5MCIgZm9udC1mYW1pbHk9InNlcmlmIj7wn428PC90ZXh0Pjwvc3ZnPg==">
+<title>FeedSafe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --cream: #FFF9F3; --warm-bg: #FDF5ED; --sand: #F9EDE0;
+    --card: #FFFFFF; --brown-dark: #5C4033; --brown-mid: #6B4226;
+    --brown-light: #8B6F5C; --tan: #A68B76; --tan-light: #BDA893;
+    --tan-pale: #D4C4B0; --accent: #D4845A; --accent-bg: #F5E6D8;
+    --accent-light: #FFF4E8; --safe: #5A9E4B; --safe-bg: #D4E8D0;
+    --safe-light: #EBF5E7; --plan: #5B7FA6; --plan-bg: #D8E4F0;
+    --plan-light: #E8EFF8; --border: #F5EDE5;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+  }
+
+  html {
+    background: var(--cream);
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--brown-dark);
+    background: linear-gradient(180deg, var(--cream) 0%, var(--warm-bg) 40%, var(--sand) 100%);
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-width: 500px;
+    margin: 0 auto;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    overscroll-behavior-y: none;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  #app {
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding-top: var(--safe-top);
+    padding-bottom: var(--safe-bottom);
+    padding-left: var(--safe-left);
+    padding-right: var(--safe-right);
+  }
+
+  /* Header */
+  .header { text-align: center; padding: 28px 20px 12px; }
+  .header h1 {
+    font-family: var(--font-display); font-size: 32px; font-weight: 400;
+    color: var(--brown-mid); letter-spacing: -0.5px;
+  }
+  .header p { font-size: 14px; color: var(--tan); margin-top: 4px; }
+
+  /* Card */
+  .card {
+    background: var(--card); border-radius: 20px; padding: 20px;
+    margin: 10px 16px; box-shadow: 0 1px 12px rgba(139,94,60,0.06);
+  }
+
+  /* Timer */
+  .timer-wrap { display: flex; flex-direction: column; align-items: center; padding: 16px 0; }
+  .timer-label { font-size: 15px; margin-top: 10px; text-align: center; }
+  .timer-label strong { font-weight: 700; }
+
+  /* Status badges */
+  .badge {
+    border-radius: 12px; padding: 11px 14px; display: flex; gap: 8px;
+    align-items: flex-start; font-size: 13px; line-height: 1.5; margin-top: 12px;
+  }
+  .badge .ic { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .badge-wait { background: var(--accent-light); color: var(--brown-light); }
+  .badge-safe { background: var(--safe-light); color: #4A7A3F; }
+  .badge-plan { background: var(--plan-light); color: #3D5A80; }
+
+  /* Empty */
+  .empty { text-align: center; padding: 24px 0; }
+  .empty-ic { font-size: 44px; margin-bottom: 8px; }
+  .empty p { color: var(--tan); font-size: 15px; line-height: 1.5; }
+  .empty .sub { font-size: 13px; opacity: 0.7; margin-top: 2px; }
+
+  /* Section label */
+  .lbl {
+    font-size: 11px; color: var(--tan); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.7px;
+  }
+
+  /* Drink rows */
+  .drow {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 0; border-bottom: 1px solid var(--border); gap: 8px;
+  }
+  .drow:last-child { border-bottom: none; }
+  .drow .em { font-size: 24px; flex-shrink: 0; }
+  .dinfo { flex: 1; min-width: 0; }
+  .dname { font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dmeta { font-size: 11px; color: var(--tan-light); margin-top: 2px; }
+
+  /* Time button */
+  .tbtn {
+    background: none; border: none; padding: 2px 0; cursor: pointer;
+    font-family: var(--font-body); font-size: 12px; color: var(--tan);
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .tbtn.fut { color: var(--plan); }
+  .tbtn .eic { font-size: 9px; opacity: 0.45; }
+
+  /* Time editor */
+  .tedit { display: flex; align-items: center; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+  .tedit input[type="datetime-local"] {
+    font-family: var(--font-body); font-size: 14px; border: 1.5px solid var(--tan-pale);
+    border-radius: 10px; padding: 6px 10px; color: var(--brown-dark);
+    background: #FFFCF8; outline: none; -webkit-appearance: none;
+    max-width: 210px;
+  }
+  .tedit input:focus { border-color: var(--accent); }
+  .bt { border: none; border-radius: 10px; padding: 7px 12px; font-size: 14px; font-weight: 700; font-family: var(--font-body); cursor: pointer; }
+  .bt-ok { background: var(--safe); color: white; }
+  .bt-no { background: var(--accent-bg); color: var(--brown-light); }
+
+  /* Qty */
+  .qc { display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
+  .qb {
+    background: var(--border); border: none; border-radius: 10px;
+    width: 36px; height: 36px; font-size: 20px; font-weight: 700;
+    color: var(--brown-light); cursor: pointer; display: flex;
+    align-items: center; justify-content: center;
+    -webkit-user-select: none; user-select: none;
+    transition: background 0.1s;
+  }
+  .qb:active { background: var(--tan-pale); }
+  .qn { min-width: 28px; text-align: center; font-size: 16px; font-weight: 800; color: var(--brown-mid); }
+
+  /* Add button */
+  .add-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: calc(100% - 32px); padding: 15px; margin: 10px 16px;
+    border: 2px dashed var(--tan-pale); border-radius: 16px;
+    background: transparent; color: var(--brown-light);
+    font-size: 16px; font-family: var(--font-body); font-weight: 600; cursor: pointer;
+  }
+  .add-btn:active { background: rgba(212,196,176,0.12); }
+
+  /* Settings */
+  .stg { margin: 10px 16px; }
+  .stg-btn {
+    background: none; border: none; display: flex; align-items: center;
+    gap: 6px; color: var(--tan); font-size: 14px; font-family: var(--font-body);
+    font-weight: 600; cursor: pointer; padding: 6px 0;
+  }
+  .stg-btn .ar { font-size: 10px; }
+  .wslider { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+  .wslider input[type="range"] { flex: 1; accent-color: var(--accent); height: 4px; }
+  .utog { display: flex; gap: 3px; background: var(--border); border-radius: 10px; padding: 3px; }
+  .ubtn {
+    padding: 5px 14px; border: none; border-radius: 8px; background: transparent;
+    color: var(--tan); font-size: 13px; font-weight: 500;
+    font-family: var(--font-body); cursor: pointer;
+  }
+  .ubtn.on { background: white; color: var(--brown-mid); font-weight: 700; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .stg-hint { font-size: 12px; color: var(--tan-light); margin-top: 4px; }
+
+  /* Reset */
+  .rst {
+    background: none; border: none; color: var(--tan-pale); font-size: 13px;
+    font-family: var(--font-body); cursor: pointer; text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* Info */
+  .ibox {
+    background: #F4EEDF; border-radius: 16px; padding: 16px; margin: 10px 16px;
+    font-size: 13px; line-height: 1.65; color: #7A6A52;
+  }
+  .itog {
+    background: none; border: none; color: var(--brown-light);
+    font-family: var(--font-body); font-weight: 700; font-size: 14px;
+    cursor: pointer; padding: 0; display: flex; align-items: center;
+    gap: 6px; width: 100%;
+  }
+  .itog .ar { margin-left: auto; font-size: 10px; }
+  .icontent { margin-top: 12px; }
+  .icontent p { margin-bottom: 8px; }
+  .icontent p:last-child { margin-bottom: 0; }
+  .icontent strong { font-weight: 700; color: #6B5A42; }
+
+  /* Footer */
+  .footer { text-align: center; padding: 16px 16px 24px; font-size: 11px; color: #C4B5A5; }
+
+  /* Overlay + Sheet */
+  .ov {
+    position: fixed; inset: 0; background: rgba(80,56,38,0.35);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    z-index: 100; display: flex; align-items: flex-end; justify-content: center;
+  }
+  .sh {
+    background: white; border-radius: 24px 24px 0 0;
+    padding: 24px 16px; padding-bottom: calc(28px + var(--safe-bottom));
+    width: 100%; max-width: 500px; max-height: 75vh;
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+    animation: slideUp 0.3s cubic-bezier(0.22,0.61,0.36,1);
+  }
+  .sh-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .sh-hdr h2 { font-family: var(--font-display); font-size: 22px; font-weight: 400; color: var(--brown-mid); }
+  .sh-close {
+    background: var(--border); border: none; border-radius: 50%;
+    width: 36px; height: 36px; font-size: 17px; cursor: pointer; color: var(--brown-light);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Preset btns */
+  .pbtn {
+    display: flex; align-items: center; gap: 12px; width: 100%;
+    padding: 14px; border: none; border-radius: 14px; background: var(--cream);
+    cursor: pointer; font-size: 15px; font-family: var(--font-body);
+    color: var(--brown-dark); text-align: left; margin-bottom: 6px;
+  }
+  .pbtn:active { background: var(--sand); }
+  .pbtn .em { font-size: 24px; }
+  .pbtn .det { flex: 1; }
+  .pbtn .nm { font-weight: 600; }
+  .pbtn .sb { font-size: 12px; color: var(--tan); margin-top: 1px; }
+  .pbtn .pl { color: var(--accent); font-size: 22px; font-weight: 700; }
+
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+  .sh::-webkit-scrollbar { display: none; }
+  #app::-webkit-scrollbar { display: none; }
+
+  /* iOS standalone splash feel */
+  @media (display-mode: standalone) {
+    .header { padding-top: 16px; }
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const P = [
+  { n: "Beer (regular)", e: "🍺", a: 5, s: 1 },
+  { n: "Beer (craft/strong)", e: "🍺", a: 9, s: 1.8 },
+  { n: "Wine (glass)", e: "🍷", a: 12, s: 1 },
+  { n: "Wine (large glass)", e: "🍷", a: 12, s: 1.7 },
+  { n: "Champagne / Prosecco", e: "🥂", a: 12, s: 1 },
+  { n: "Spirit (single shot)", e: "🥃", a: 40, s: 1 },
+  { n: "Spirit (double shot)", e: "🥃", a: 40, s: 2 },
+  { n: "Cocktail (standard)", e: "🍸", a: 15, s: 1.5 },
+  { n: "Cocktail (strong)", e: "🍸", a: 22, s: 2.5 },
+  { n: "Hard seltzer", e: "🫧", a: 5, s: 1 },
+  { n: "Cider", e: "🍎", a: 5, s: 1 },
+  { n: "Port / Fortified wine", e: "🍷", a: 20, s: 0.7 },
+];
+
+let S = { dk:[], nid:1, wkg:68, wu:"kg", pk:false, info:false, wt:false, eid:null, ev:"" };
+
+function sv(){try{localStorage.setItem("fs",JSON.stringify({dk:S.dk.map(d=>({...d,t:d.t})),nid:S.nid,wkg:S.wkg,wu:S.wu}))}catch(e){}}
+function ld(){try{const r=localStorage.getItem("fs");if(!r)return;const d=JSON.parse(r);S.dk=(d.dk||[]);S.nid=d.nid||1;S.wkg=d.wkg||68;S.wu=d.wu||"kg"}catch(e){}}
+
+function hpd(k){if(k<=54)return 2.5;if(k<=63)return 2.25;if(k<=72)return 2.15;if(k<=82)return 2;if(k<=91)return 1.85;return 1.75}
+function tsd(){return S.dk.reduce((a,d)=>a+d.s*d.q,0)}
+function hf(){return S.dk.some(d=>d.t>Date.now())}
+
+function st(){
+  if(!S.dk.length)return null;
+  const h=hpd(S.wkg),tot=tsd()*h;
+  const lt=S.dk.reduce((l,d)=>d.t>l?d.t:l,S.dk[0].t);
+  return lt+tot*3600000;
+}
+
+function prog(){
+  const s=st();if(!s||!S.dk.length)return 1;
+  const e=S.dk.reduce((m,d)=>d.t<m?d.t:m,S.dk[0].t);
+  const tot=s-e;if(tot<=0)return 1;
+  return Math.min(1,Math.max(0,(Date.now()-e)/tot));
+}
+
+function ft(ms){return new Date(ms).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})}
+function fd(ms){
+  const n=new Date(),t=new Date(n);t.setDate(t.getDate()+1);
+  const d=new Date(ms);
+  if(d.toDateString()===n.toDateString())return"today";
+  if(d.toDateString()===t.toDateString())return"tomorrow";
+  return d.toLocaleDateString([],{weekday:"short",month:"short",day:"numeric"});
+}
+function fdur(ms){
+  const m=ms/60000,h=Math.floor(m/60),mn=Math.round(m%60);
+  if(h===0)return mn+"m";if(mn===0)return h+"h";return h+"h "+mn+"m";
+}
+function toi(ms){
+  const d=new Date(ms);
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")+"T"+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
+}
+
+function haptic(){try{navigator.vibrate&&navigator.vibrate(10)}catch(e){}}
+
+function R(){
+  const now=Date.now(),safe=st(),ok=S.dk.length>0&&safe&&now>=safe;
+  const plan=hf(),ts=tsd(),p=prog();
+  const dw=S.wu==="lb"?Math.round(S.wkg*2.205):S.wkg;
+  const R=70,C=2*Math.PI*R,off=C*(1-p);
+  const sc=ok?"var(--safe)":(plan?"var(--plan)":"var(--accent)");
+  const bg=ok?"var(--safe-bg)":(plan?"var(--plan-bg)":"var(--accent-bg)");
+  const tc=ok?"var(--safe)":(plan?"#3D5A80":"var(--brown-mid)");
+  const uc=ok?"var(--safe)":(plan?"#7A9BBD":"var(--tan)");
+  let tl="";if(safe&&now<safe)tl=fdur(safe-now);
+
+  let timer="";
+  if(!S.dk.length){
+    timer=`<div class="empty"><div class="empty-ic">🍼</div><p>Add a drink to start the timer.</p><p class="sub">Tap the time on any drink to plan ahead.</p></div>`;
+  } else {
+    const top=ok?"Safe to":tl, bot=ok?"feed / pump":(plan?"wait after last drink":"remaining");
+    const tsz=ok?18:26, bsz=ok?16:13;
+    let sl="";
+    if(safe)sl=`<p class="timer-label" style="color:${tc}">${ok?"Clear since ":"Safe at "}<strong>${ft(safe)}</strong> ${fd(safe)}</p>`;
+
+    let badge="";
+    if(plan&&!ok)badge=`<div class="badge badge-plan" style="margin-top:12px"><span class="ic">📅</span><span>Planning mode — includes future drinks.</span></div>`;
+    if(!ok&&!plan)badge+=`<div class="badge badge-wait"><span class="ic">⏳</span><span>Pump if needed for comfort, but discard the milk until the timer completes.</span></div>`;
+    if(ok)badge=`<div class="badge badge-safe"><span class="ic">✅</span><span>Alcohol should have cleared. Safe to breastfeed or pump for storage.</span></div>`;
+
+    timer=`
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span class="lbl">${ts.toFixed(1)} standard drinks</span>
+        <button class="rst" onclick="clr()">Reset</button>
+      </div>
+      ${plan&&!ok?`<div class="badge badge-plan" style="margin-top:12px"><span class="ic">📅</span><span>Planning mode — includes future drinks.</span></div>`:""}
+      <div class="timer-wrap">
+        <svg width="180" height="180" viewBox="0 0 180 180">
+          <circle cx="90" cy="90" r="${R}" fill="none" stroke="${bg}" stroke-width="10"/>
+          <circle cx="90" cy="90" r="${R}" fill="none" stroke="${sc}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${off}" transform="rotate(-90 90 90)" style="transition:stroke-dashoffset 1s ease,stroke .5s ease"/>
+          <text x="90" y="78" text-anchor="middle" style="font-family:var(--font-display);font-size:${tsz}px;fill:${tc};font-weight:400">${top}</text>
+          <text x="90" y="105" text-anchor="middle" style="font-family:var(--font-body);font-size:${bsz}px;fill:${uc}">${bot}</text>
+        </svg>
+        ${sl}
+      </div>
+      ${!ok&&!plan?`<div class="badge badge-wait"><span class="ic">⏳</span><span>Pump if needed for comfort, but discard the milk until the timer completes.</span></div>`:""}
+      ${ok?`<div class="badge badge-safe"><span class="ic">✅</span><span>Alcohol should have cleared. Safe to breastfeed or pump for storage.</span></div>`:""}`;
+  }
+
+  let dklist="";
+  if(S.dk.length){
+    const rows=S.dk.map((d,i)=>{
+      const fut=d.t>now;
+      let th;
+      if(S.eid===d.id){
+        th=`<div class="tedit"><input type="datetime-local" value="${S.ev}" onchange="eev(this.value)" id="ti${d.id}"><button class="bt bt-ok" onclick="svt(${d.id})">✓</button><button class="bt bt-no" onclick="ce()">✕</button></div>`;
+      }else{
+        th=`<button class="tbtn ${fut?'fut':''}" onclick="se(${d.id})">${fut?'<span style="font-size:10px">📅</span> ':''}${ft(d.t)} ${fd(d.t)} <span class="eic">✎</span></button>`;
+      }
+      return `<div class="drow"><span class="em">${d.e}</span><div class="dinfo"><div class="dname">${d.n}</div>${th}<div class="dmeta">${(d.s*d.q).toFixed(1)} std drinks</div></div><div class="qc"><button class="qb" onclick="dec(${d.id})">−</button><span class="qn">${d.q}</span><button class="qb" onclick="inc(${d.id})">+</button></div></div>`;
+    }).join("");
+    dklist=`<div class="card"><p class="lbl" style="margin-bottom:6px">Your drinks</p>${rows}</div>`;
+  }
+
+  const wmin=S.wu==="kg"?40:88, wmax=S.wu==="kg"?120:265;
+  let whtml=`<div class="stg">
+    <button class="stg-btn" onclick="tw()">⚖️ Your weight: ${dw}${S.wu} <span class="ar">${S.wt?"▲":"▼"}</span></button>
+    ${S.wt?`<div class="wslider"><input type="range" min="${wmin}" max="${wmax}" value="${dw}" oninput="sw(this.value)"><div class="utog"><button class="ubtn ${S.wu==='kg'?'on':''}" onclick="su('kg')">kg</button><button class="ubtn ${S.wu==='lb'?'on':''}" onclick="su('lb')">lb</button></div></div>`:""}
+    <p class="stg-hint">Weight affects how quickly alcohol is metabolised</p>
+  </div>`;
+
+  let ihtml=`<div class="ibox">
+    <button class="itog" onclick="ti()"><span>ℹ️</span> How does this work?<span class="ar">${S.info?"▲":"▼"}</span></button>
+    ${S.info?`<div class="icontent">
+      <p><strong>The rule:</strong> Wait ~2 hours per standard drink before breastfeeding. Your weight affects metabolism speed.</p>
+      <p><strong>Planning ahead:</strong> Tap the time on any drink to change it — set a future time to see when you'd be clear.</p>
+      <p><strong>Standard drink</strong> = 14g pure alcohol ≈ one 355ml regular beer, one 148ml glass of wine, or one 44ml shot of spirits.</p>
+      <p><strong>Pump &amp; dump:</strong> Pumping doesn't remove alcohol faster — it leaves milk as your blood alcohol drops. Only pump for comfort, and discard.</p>
+      <p><strong>Sources:</strong> CDC, LactMed (NIH), Academy of Breastfeeding Medicine. Estimates only — consult your healthcare provider.</p>
+    </div>`:""}
+  </div>`;
+
+  let pkhtml="";
+  if(S.pk){
+    const btns=P.map(p=>`<button class="pbtn" onclick="ad('${p.n.replace(/'/g,"\\'")}')"><span class="em">${p.e}</span><div class="det"><div class="nm">${p.n}</div><div class="sb">${p.s===1?"1 std drink":p.s+" std drinks"} · ${p.a}% ABV</div></div><span class="pl">+</span></button>`).join("");
+    pkhtml=`<div class="ov" onclick="cp()"><div class="sh" onclick="event.stopPropagation()"><div class="sh-hdr"><h2>What are you having?</h2><button class="sh-close" onclick="cp()">✕</button></div>${btns}</div></div>`;
+  }
+
+  document.getElementById("app").innerHTML=`
+    <div class="header"><h1>FeedSafe</h1><p>Know when it's safe to breastfeed</p></div>
+    <div class="card">${timer}</div>
+    ${dklist}
+    <button class="add-btn" onclick="op(
