@@ -175,17 +175,13 @@ function toi(ms){
   return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")+"T"+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
 }
 function haptic(){try{navigator.vibrate&&navigator.vibrate(10)}catch(e){}}
-
 function op(){S.pk=true;R();}
 function cp(){S.pk=false;R();}
 function tw(){S.wt=!S.wt;R();}
 function ti(){S.info=!S.info;R();}
-function clr(){if(confirm("Reset all drinks?")){{S.dk=[];S.nid=1;sv();R();}}}
+function clr(){if(confirm("Reset all drinks?")){S.dk=[];S.nid=1;sv();R();}}
 function sw(v){S.wkg=S.wu==="lb"?Math.round(v/2.205):parseInt(v);sv();R();}
-function su(u){
-  if(u===S.wu)return;
-  S.wu=u;sv();R();
-}
+function su(u){if(u===S.wu)return;S.wu=u;sv();R();}
 function se(id){S.eid=id;S.ev=toi(S.dk.find(d=>d.id===id).t);R();}
 function ce(){S.eid=null;S.ev="";R();}
 function eev(v){S.ev=v;}
@@ -221,7 +217,6 @@ function R(){
   const tc=ok?"var(--safe)":(plan?"#3D5A80":"var(--brown-mid)");
   const uc=ok?"var(--safe)":(plan?"#7A9BBD":"var(--tan)");
   let tl="";if(safe&&now<safe)tl=fdur(safe-now);
-
   let timer="";
   if(!S.dk.length){
     timer=`<div class="empty"><div class="empty-ic">🍼</div><p>Add a drink to start the timer.</p><p class="sub">Tap the time on any drink to plan ahead.</p></div>`;
@@ -248,7 +243,6 @@ function R(){
       ${!ok&&!plan?`<div class="badge badge-wait"><span class="ic">⏳</span><span>Pump if needed for comfort, but discard the milk until the timer completes.</span></div>`:""}
       ${ok?`<div class="badge badge-safe"><span class="ic">✅</span><span>Alcohol should have cleared. Safe to breastfeed or pump for storage.</span></div>`:""}`;
   }
-
   let dklist="";
   if(S.dk.length){
     const rows=S.dk.map((d)=>{
@@ -263,14 +257,12 @@ function R(){
     }).join("");
     dklist=`<div class="card"><p class="lbl" style="margin-bottom:6px">Your drinks</p>${rows}</div>`;
   }
-
   const wmin=S.wu==="kg"?40:88, wmax=S.wu==="kg"?120:265;
   let whtml=`<div class="stg">
     <button class="stg-btn" onclick="tw()">⚖️ Your weight: ${dw}${S.wu} <span class="ar">${S.wt?"▲":"▼"}</span></button>
     ${S.wt?`<div class="wslider"><input type="range" min="${wmin}" max="${wmax}" value="${dw}" oninput="sw(this.value)"><div class="utog"><button class="ubtn ${S.wu==='kg'?'on':''}" onclick="su('kg')">kg</button><button class="ubtn ${S.wu==='lb'?'on':''}" onclick="su('lb')">lb</button></div></div>`:""}
     <p class="stg-hint">Weight affects how quickly alcohol is metabolised</p>
   </div>`;
-
   let ihtml=`<div class="ibox">
     <button class="itog" onclick="ti()"><span>ℹ️</span> How does this work?<span class="ar">${S.info?"▲":"▼"}</span></button>
     ${S.info?`<div class="icontent">
@@ -281,13 +273,11 @@ function R(){
       <p><strong>Sources:</strong> CDC, LactMed (NIH), Academy of Breastfeeding Medicine. Estimates only — consult your healthcare provider.</p>
     </div>`:""}
   </div>`;
-
   let pkhtml="";
   if(S.pk){
     const btns=P.map(p=>`<button class="pbtn" onclick="ad('${p.n.replace(/'/g,"\\'")}')"><span class="em">${p.e}</span><div class="det"><div class="nm">${p.n}</div><div class="sb">${p.s===1?"1 std drink":p.s+" std drinks"} · ${p.a}% ABV</div></div><span class="pl">+</span></button>`).join("");
     pkhtml=`<div class="ov" onclick="cp()"><div class="sh" onclick="event.stopPropagation()"><div class="sh-hdr"><h2>What are you having?</h2><button class="sh-close" onclick="cp()">✕</button></div>${btns}</div></div>`;
   }
-
   document.getElementById("app").innerHTML=`
     <div class="header"><h1>FeedSafe</h1><p>Know when it's safe to breastfeed</p></div>
     <div class="card">${timer}</div>
@@ -302,5 +292,5 @@ ld();
 R();
 setInterval(R, 10000);
 </script>
-</body>
-</html>
+<script data-goatcounter="https://feedsafe.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body
