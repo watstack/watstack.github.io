@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="FeedSafe">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
-<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiBmaWxsPSIjRkZGOUYzIi8+PHRleHQgeD0iOTAiIHk9IjExNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5MCIgZm9udC1mYW1pbHk9InNlcmlmIj7wn428PC90ZXh0Pjwvc3ZnPg==">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiBmaWxsPSIjRkZGOUYzIi8+PHRleHQgeD0iOTAiIHk9IjExNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5MCIgZm9udC1mYW1pbHk9InNlcmlmIj7wn528PC90ZXh0Pjwvc3ZnPg==">
 <title>FeedSafe</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -25,6 +25,8 @@
   --accent-light: #FFF4E8; --safe: #5A9E4B; --safe-bg: #D4E8D0;
   --safe-light: #EBF5E7; --plan: #5B7FA6; --plan-bg: #D8E4F0;
   --plan-light: #E8EFF8; --border: #F5EDE5;
+  --med: #7B5EA7; --med-bg: #EDE5F5; --med-light: #F6F0FC;
+  --med-warn: #C0863A; --med-warn-bg: #FDF0DC; --med-warn-light: #FFFBF2;
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
   --safe-top: env(safe-area-inset-top, 0px);
@@ -51,14 +53,21 @@ body {
 .header h1 { font-family: var(--font-display); font-size: 32px; font-weight: 400; color: var(--brown-mid); letter-spacing: -0.5px; }
 .header p { font-size: 14px; color: var(--tan); margin-top: 4px; }
 .card { background: var(--card); border-radius: 20px; padding: 20px; margin: 10px 16px; box-shadow: 0 1px 12px rgba(139,94,60,0.06); }
-.timer-wrap { display: flex; flex-direction: column; align-items: center; padding: 16px 0; }
-.timer-label { font-size: 15px; margin-top: 10px; text-align: center; }
+/* Modular timer grid */
+.timer-grid { display: flex; gap: 10px; margin: 10px 16px; }
+.timer-module { background: var(--card); border-radius: 20px; padding: 16px; box-shadow: 0 1px 12px rgba(139,94,60,0.06); flex: 1; min-width: 0; }
+.timer-module.full { flex: 1; }
+.timer-module-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--tan); margin-bottom: 8px; }
+.timer-wrap { display: flex; flex-direction: column; align-items: center; padding: 8px 0; }
+.timer-label { font-size: 13px; margin-top: 8px; text-align: center; }
 .timer-label strong { font-weight: 700; }
 .badge { border-radius: 12px; padding: 11px 14px; display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-top: 12px; }
 .badge .ic { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
 .badge-wait { background: var(--accent-light); color: var(--brown-light); }
 .badge-safe { background: var(--safe-light); color: #4A7A3F; }
 .badge-plan { background: var(--plan-light); color: #3D5A80; }
+.badge-med { background: var(--med-light); color: var(--med); }
+.badge-med-warn { background: var(--med-warn-light); color: var(--med-warn); }
 .empty { text-align: center; padding: 24px 0; }
 .empty-ic { font-size: 44px; margin-bottom: 8px; }
 .empty p { color: var(--tan); font-size: 15px; line-height: 1.5; }
@@ -115,6 +124,32 @@ body {
 .pbtn .nm { font-weight: 600; }
 .pbtn .sb { font-size: 12px; color: var(--tan); margin-top: 1px; }
 .pbtn .pl { color: var(--accent); font-size: 22px; font-weight: 700; }
+/* Sheet tab switcher */
+.sh-tabs { display: flex; gap: 4px; background: var(--border); border-radius: 12px; padding: 4px; margin-bottom: 18px; }
+.sh-tab { flex: 1; padding: 8px 6px; border: none; border-radius: 9px; background: transparent; color: var(--tan); font-size: 14px; font-weight: 600; font-family: var(--font-body); cursor: pointer; transition: background 0.15s, color 0.15s; }
+.sh-tab.on { background: white; color: var(--brown-mid); box-shadow: 0 1px 4px rgba(0,0,0,0.09); }
+/* Med picker buttons */
+.mbtn { display: flex; align-items: center; gap: 12px; width: 100%; padding: 14px; border: none; border-radius: 14px; background: var(--med-light); cursor: pointer; font-size: 15px; font-family: var(--font-body); color: var(--brown-dark); text-align: left; margin-bottom: 6px; }
+.mbtn:active { background: var(--med-bg); }
+.mbtn .em { font-size: 24px; }
+.mbtn .det { flex: 1; }
+.mbtn .nm { font-weight: 600; }
+.mbtn .sb { font-size: 12px; color: var(--med); margin-top: 1px; }
+.mbtn .pl { color: var(--med); font-size: 22px; font-weight: 700; }
+.mbtn:disabled { opacity: 0.45; cursor: not-allowed; }
+.mbtn:disabled .pl { opacity: 0; }
+.mbtn:disabled .sb { color: var(--med-warn); }
+/* Med card in main view */
+.med-dose-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--border); gap: 8px; }
+.med-dose-row:last-child { border-bottom: none; }
+.med-dose-row .em { font-size: 22px; flex-shrink: 0; }
+.med-dose-info { flex: 1; min-width: 0; }
+.med-dose-name { font-size: 14px; font-weight: 600; }
+.med-dose-meta { font-size: 11px; color: var(--tan-light); margin-top: 2px; }
+.med-dose-next { font-size: 12px; font-weight: 700; margin-top: 2px; }
+.med-dose-next.ok { color: var(--safe); }
+.med-dose-next.wait { color: var(--med-warn); }
+.med-rst { background: none; border: none; color: var(--tan-pale); font-size: 12px; font-family: var(--font-body); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; padding: 0; }
 @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 .sh::-webkit-scrollbar { display: none; }
 #app::-webkit-scrollbar { display: none; }
@@ -139,10 +174,59 @@ const P = [
   { n: "Port / Fortified wine", e: "🍷", a: 20, s: 0.7 },
 ];
 
-let S = { dk:[], nid:1, wkg:68, wu:"kg", pk:false, info:false, wt:false, eid:null, ev:"" };
+// Medication definitions
+// interval_ms: min time between doses
+// daily_max_mg: max total per 24h
+// doses: available dose options in mg
+const MEDS = [
+  {
+    id: "paracetamol",
+    n: "Paracetamol",
+    e: "💊",
+    doses: [
+      { mg: 500,  label: "500mg (1 tablet)",   sb: "Standard dose · every 4–6h" },
+      { mg: 1000, label: "1000mg (2 tablets)",  sb: "Full dose · every 4–6h" },
+    ],
+    interval_ms: 4 * 3600000,   // 4 hours minimum between doses
+    daily_max_mg: 4000,          // 4g per 24h
+    note: "Safe while breastfeeding at recommended doses.",
+    colour: "var(--med)"
+  }
+];
 
-function sv(){try{localStorage.setItem("fs",JSON.stringify({dk:S.dk.map(d=>({...d,t:d.t})),nid:S.nid,wkg:S.wkg,wu:S.wu}))}catch(e){}}
-function ld(){try{const r=localStorage.getItem("fs");if(!r)return;const d=JSON.parse(r);S.dk=(d.dk||[]);S.nid=d.nid||1;S.wkg=d.wkg||68;S.wu=d.wu||"kg"}catch(e){}}
+let S = {
+  dk:[], nid:1, wkg:68, wu:"kg",
+  pk:false, pktab:"drinks",       // pktab: "drinks" | "meds"
+  info:false, wt:false,
+  eid:null, ev:"",
+  meddoses: []                     // [{id, medId, doseId, mg, t}]
+};
+
+function sv(){
+  try{
+    localStorage.setItem("fs", JSON.stringify({
+      dk: S.dk.map(d=>({...d,t:d.t})),
+      nid: S.nid,
+      wkg: S.wkg,
+      wu: S.wu,
+      meddoses: S.meddoses
+    }));
+  }catch(e){}
+}
+function ld(){
+  try{
+    const r=localStorage.getItem("fs");
+    if(!r)return;
+    const d=JSON.parse(r);
+    S.dk=(d.dk||[]);
+    S.nid=d.nid||1;
+    S.wkg=d.wkg||68;
+    S.wu=d.wu||"kg";
+    S.meddoses=d.meddoses||[];
+  }catch(e){}
+}
+
+// ---- Alcohol helpers ----
 function hpd(k){if(k<=54)return 2.5;if(k<=63)return 2.25;if(k<=72)return 2.15;if(k<=82)return 2;if(k<=91)return 1.85;return 1.75}
 function tsd(){return S.dk.reduce((a,d)=>a+d.s*d.q,0)}
 function hf(){return S.dk.some(d=>d.t>Date.now())}
@@ -158,6 +242,46 @@ function prog(){
   const tot=s-e;if(tot<=0)return 1;
   return Math.min(1,Math.max(0,(Date.now()-e)/tot));
 }
+
+// ---- Medication helpers ----
+function medDosesFor(medId){
+  return S.meddoses.filter(d=>d.medId===medId).sort((a,b)=>a.t-b.t);
+}
+function medTotalMgLast24h(medId){
+  const cutoff=Date.now()-24*3600000;
+  return medDosesFor(medId).filter(d=>d.t>=cutoff).reduce((s,d)=>s+d.mg,0);
+}
+function medLastDoseTime(medId){
+  const doses=medDosesFor(medId);
+  if(!doses.length)return null;
+  return doses.reduce((m,d)=>d.t>m?d.t:m,doses[0].t);
+}
+function medNextDoseOk(medId){
+  const med=MEDS.find(m=>m.id===medId);
+  const last=medLastDoseTime(medId);
+  if(!last)return Date.now();
+  return last+med.interval_ms;
+}
+function canTakeDose(medId, mg){
+  const med=MEDS.find(m=>m.id===medId);
+  const now=Date.now();
+  if(medNextDoseOk(medId)>now)return false;
+  if(medTotalMgLast24h(medId)+mg>med.daily_max_mg)return false;
+  return true;
+}
+function addMedDose(medId, mg){
+  if(!canTakeDose(medId, mg))return;
+  S.meddoses.push({id:Date.now(), medId, mg, t:Date.now()});
+  sv(); S.pk=false; haptic(); R();
+}
+function clearMedDoses(medId){
+  if(confirm("Clear all " + MEDS.find(m=>m.id===medId).n + " doses?")) {
+    S.meddoses=S.meddoses.filter(d=>d.medId!==medId);
+    sv(); R();
+  }
+}
+
+// ---- Util ----
 function ft(ms){return new Date(ms).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})}
 function fd(ms){
   const n=new Date(),t=new Date(n);t.setDate(t.getDate()+1);
@@ -175,8 +299,11 @@ function toi(ms){
   return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")+"T"+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
 }
 function haptic(){try{navigator.vibrate&&navigator.vibrate(10)}catch(e){}}
+
+// ---- UI actions ----
 function op(){S.pk=true;R();}
 function cp(){S.pk=false;R();}
+function setTab(t){S.pktab=t;R();}
 function tw(){S.wt=!S.wt;R();}
 function ti(){S.info=!S.info;R();}
 function clr(){if(confirm("Reset all drinks?")){S.dk=[];S.nid=1;sv();R();}}
@@ -211,38 +338,125 @@ function R(){
   const now=Date.now(),safe=st(),ok=S.dk.length>0&&safe&&now>=safe;
   const plan=hf(),ts=tsd(),p=prog();
   const dw=S.wu==="lb"?Math.round(S.wkg*2.205):S.wkg;
-  const RR=70,C=2*Math.PI*RR,off=C*(1-p);
-  const sc=ok?"var(--safe)":(plan?"var(--plan)":"var(--accent)");
-  const bg=ok?"var(--safe-bg)":(plan?"var(--plan-bg)":"var(--accent-bg)");
-  const tc=ok?"var(--safe)":(plan?"#3D5A80":"var(--brown-mid)");
-  const uc=ok?"var(--safe)":(plan?"#7A9BBD":"var(--tan)");
-  let tl="";if(safe&&now<safe)tl=fdur(safe-now);
-  let timer="";
-  if(!S.dk.length){
-    timer=`<div class="empty"><div class="empty-ic">🍼</div><p>Add a drink to start the timer.</p><p class="sub">Tap the time on any drink to plan ahead.</p></div>`;
-  } else {
-    const top=ok?"Safe to":tl, bot=ok?"feed / pump":(plan?"wait after last drink":"remaining");
-    const tsz=ok?18:26, bsz=ok?16:13;
-    let sl="";
-    if(safe)sl=`<p class="timer-label" style="color:${tc}">${ok?"Clear since ":"Safe at "}<strong>${ft(safe)}</strong> ${fd(safe)}</p>`;
-    timer=`
+
+  // --- Determine if med module should show ---
+  const hasMed = MEDS.some(m=>medDosesFor(m.id).length>0);
+  const hasDrink = S.dk.length>0;
+  const splitLayout = hasDrink && hasMed;
+
+  // --- Alcohol timer SVG (size adapts to split/full) ---
+  function drinkTimerSVG(small){
+    const RR=small?44:70, sz=small?110:180;
+    const C=2*Math.PI*RR, off=C*(1-p);
+    const sc=ok?"var(--safe)":(plan?"var(--plan)":"var(--accent)");
+    const bg=ok?"var(--safe-bg)":(plan?"var(--plan-bg)":"var(--accent-bg)");
+    const tc=ok?"var(--safe)":(plan?"#3D5A80":"var(--brown-mid)");
+    const uc=ok?"var(--safe)":(plan?"#7A9BBD":"var(--tan)");
+    let tl="";if(safe&&now<safe)tl=fdur(safe-now);
+    const top=ok?"Safe":tl, bot=ok?"to feed":(plan?"planning":"left");
+    const tsz=small?(ok?11:16):(ok?18:26), bsz=small?9:13;
+    return `<svg width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}">
+      <circle cx="${sz/2}" cy="${sz/2}" r="${RR}" fill="none" stroke="${bg}" stroke-width="${small?7:10}"/>
+      <circle cx="${sz/2}" cy="${sz/2}" r="${RR}" fill="none" stroke="${sc}" stroke-width="${small?7:10}" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${off}" transform="rotate(-90 ${sz/2} ${sz/2})" style="transition:stroke-dashoffset 1s ease,stroke .5s ease"/>
+      <text x="${sz/2}" y="${sz/2-7}" text-anchor="middle" style="font-family:var(--font-display);font-size:${tsz}px;fill:${tc};font-weight:400">${top}</text>
+      <text x="${sz/2}" y="${sz/2+10}" text-anchor="middle" style="font-family:var(--font-body);font-size:${bsz}px;fill:${uc}">${bot}</text>
+    </svg>`;
+  }
+
+  // --- Med timer SVG ---
+  function medTimerSVG(small){
+    const med=MEDS[0];
+    const total24=medTotalMgLast24h(med.id);
+    const nextOk=medNextDoseOk(med.id);
+    const canNow=nextOk<=now&&total24<med.daily_max_mg;
+    const waitMs=Math.max(0,nextOk-now);
+    const RR=small?44:70, sz=small?110:180;
+    const C=2*Math.PI*RR;
+    // progress: within the 4h window since last dose
+    const last=medLastDoseTime(med.id)||now;
+    const elapsed=now-last, interval=med.interval_ms;
+    const mp=Math.min(1,Math.max(0,elapsed/interval));
+    const off=C*(1-mp);
+    const sc=canNow?"var(--safe)":"var(--med)";
+    const bg=canNow?"var(--safe-bg)":"var(--med-bg)";
+    const tc=canNow?"var(--safe)":"var(--med)";
+    const top=canNow?"OK":fdur(waitMs);
+    const bot=canNow?"next dose":"until next";
+    const tsz=small?(canNow?13:12):(canNow?20:22), bsz=small?9:13;
+    return `<svg width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}">
+      <circle cx="${sz/2}" cy="${sz/2}" r="${RR}" fill="none" stroke="${bg}" stroke-width="${small?7:10}"/>
+      <circle cx="${sz/2}" cy="${sz/2}" r="${RR}" fill="none" stroke="${sc}" stroke-width="${small?7:10}" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${off}" transform="rotate(-90 ${sz/2} ${sz/2})" style="transition:stroke-dashoffset 1s ease,stroke .5s ease"/>
+      <text x="${sz/2}" y="${sz/2-7}" text-anchor="middle" style="font-family:var(--font-display);font-size:${tsz}px;fill:${tc};font-weight:400">${top}</text>
+      <text x="${sz/2}" y="${sz/2+10}" text-anchor="middle" style="font-family:var(--font-body);font-size:${bsz}px;fill:${tc}">${bot}</text>
+    </svg>`;
+  }
+
+  // --- Build timer section ---
+  let timerSection="";
+  if(!hasDrink && !hasMed){
+    timerSection=`<div class="card"><div class="empty"><div class="empty-ic">🍼</div><p>Add a drink to start the timer.</p><p class="sub">Tap + to also track medication.</p></div></div>`;
+  } else if(splitLayout){
+    // Side-by-side modules
+    const sc=ok?"var(--safe)":(plan?"var(--plan)":"var(--accent)");
+    const tc=ok?"var(--safe)":(plan?"#3D5A80":"var(--brown-mid)");
+    let safeLine="";
+    if(safe)safeLine=`<div class="timer-label" style="color:${tc};font-size:11px;margin-top:4px">${ok?"Since ":"At "}<strong>${ft(safe)}</strong></div>`;
+    const med0=MEDS[0];
+    const total24=medTotalMgLast24h(med0.id);
+    const nextOk=medNextDoseOk(med0.id);
+    const canNow2=nextOk<=now&&total24<med0.daily_max_mg;
+    const medColor=canNow2?"var(--safe)":"var(--med)";
+    timerSection=`<div style="margin:4px 16px 0;display:flex;justify-content:space-between;align-items:center">
+        <span class="lbl">${ts.toFixed(1)} std drinks</span>
+        <button class="rst" onclick="clr()">Reset drinks</button>
+      </div>
+      <div class="timer-grid">
+        <div class="timer-module">
+          <div class="timer-module-label">🍺 Alcohol</div>
+          <div class="timer-wrap" style="padding:4px 0">${drinkTimerSVG(true)}${safeLine}</div>
+          ${!ok&&!plan?`<div style="font-size:11px;color:var(--brown-light);text-align:center;margin-top:4px;line-height:1.4">Discard milk until clear</div>`:""}
+          ${ok?`<div style="font-size:11px;color:var(--safe);text-align:center;margin-top:4px">✅ Safe to feed</div>`:""}
+        </div>
+        <div class="timer-module">
+          <div style="display:flex;justify-content:space-between;align-items:center"><div class="timer-module-label">💊 Paracetamol</div><button class="med-rst" onclick="clearMedDoses('${med0.id}')">Clear</button></div>
+          <div class="timer-wrap" style="padding:4px 0">${medTimerSVG(true)}</div>
+          <div style="font-size:11px;color:${medColor};text-align:center;margin-top:4px">${total24}mg / ${med0.daily_max_mg}mg today</div>
+        </div>
+      </div>`;
+  } else if(hasDrink){
+    // Full-width drink timer (original layout)
+    const sc=ok?"var(--safe)":(plan?"var(--plan)":"var(--accent)");
+    const bg=ok?"var(--safe-bg)":(plan?"var(--plan-bg)":"var(--accent-bg)");
+    const tc=ok?"var(--safe)":(plan?"#3D5A80":"var(--brown-mid)");
+    const uc=ok?"var(--safe)":(plan?"#7A9BBD":"var(--tan)");
+    let tl="";if(safe&&now<safe)tl=fdur(safe-now);
+    let sl="";if(safe)sl=`<p class="timer-label" style="color:${tc}">${ok?"Clear since ":"Safe at "}<strong>${ft(safe)}</strong> ${fd(safe)}</p>`;
+    timerSection=`<div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <span class="lbl">${ts.toFixed(1)} standard drinks</span>
         <button class="rst" onclick="clr()">Reset</button>
       </div>
       ${plan&&!ok?`<div class="badge badge-plan" style="margin-top:12px"><span class="ic">📅</span><span>Planning mode — includes future drinks.</span></div>`:""}
-      <div class="timer-wrap">
-        <svg width="180" height="180" viewBox="0 0 180 180">
-          <circle cx="90" cy="90" r="${RR}" fill="none" stroke="${bg}" stroke-width="10"/>
-          <circle cx="90" cy="90" r="${RR}" fill="none" stroke="${sc}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${off}" transform="rotate(-90 90 90)" style="transition:stroke-dashoffset 1s ease,stroke .5s ease"/>
-          <text x="90" y="78" text-anchor="middle" style="font-family:var(--font-display);font-size:${tsz}px;fill:${tc};font-weight:400">${top}</text>
-          <text x="90" y="105" text-anchor="middle" style="font-family:var(--font-body);font-size:${bsz}px;fill:${uc}">${bot}</text>
-        </svg>
-        ${sl}
-      </div>
+      <div class="timer-wrap">${drinkTimerSVG(false)}${sl}</div>
       ${!ok&&!plan?`<div class="badge badge-wait"><span class="ic">⏳</span><span>Pump if needed for comfort, but discard the milk until the timer completes.</span></div>`:""}
-      ${ok?`<div class="badge badge-safe"><span class="ic">✅</span><span>Alcohol should have cleared. Safe to breastfeed or pump for storage.</span></div>`:""}`;
+      ${ok?`<div class="badge badge-safe"><span class="ic">✅</span><span>Alcohol should have cleared. Safe to breastfeed or pump for storage.</span></div>`:""}
+    </div>`;
+  } else {
+    // Full-width med timer only
+    const med0=MEDS[0];
+    const total24=medTotalMgLast24h(med0.id);
+    const nextOk=medNextDoseOk(med0.id);
+    const canNow2=nextOk<=now&&total24<med0.daily_max_mg;
+    timerSection=`<div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span class="lbl">💊 Paracetamol · ${total24}mg today</span>
+        <button class="med-rst" onclick="clearMedDoses('${med0.id}')">Clear</button>
+      </div>
+      <div class="timer-wrap">${medTimerSVG(false)}</div>
+      ${canNow2?`<div class="badge badge-safe"><span class="ic">✅</span><span>Next dose available now.</span></div>`:`<div class="badge badge-med"><span class="ic">💊</span><span>Next dose at ${ft(nextOk)} ${fd(nextOk)}.</span></div>`}
+    </div>`;
   }
+
   let dklist="";
   if(S.dk.length){
     const rows=S.dk.map((d)=>{
@@ -257,12 +471,46 @@ function R(){
     }).join("");
     dklist=`<div class="card"><p class="lbl" style="margin-bottom:6px">Your drinks</p>${rows}</div>`;
   }
+
+  // Med doses card (detail list) — only shown when NOT in split layout
+  let medcard="";
+  if(!splitLayout){
+    for(const med of MEDS){
+      const doses=medDosesFor(med.id);
+      if(!doses.length)continue;
+      const total24=medTotalMgLast24h(med.id);
+      const nextOk=medNextDoseOk(med.id);
+      const dailyLeft=med.daily_max_mg-total24;
+      const rows=doses.slice(-3).reverse().map(d=>{
+        const isNext=d.t===medLastDoseTime(med.id);
+        const nxt=d.t+med.interval_ms;
+        const nxtOk=nxt<=now;
+        return `<div class="med-dose-row">
+          <span class="em">${med.e}</span>
+          <div class="med-dose-info">
+            <div class="med-dose-name">${med.n} ${d.mg}mg</div>
+            <div class="med-dose-meta">${ft(d.t)} ${fd(d.t)}</div>
+            ${isNext?`<div class="med-dose-next ${nxtOk?'ok':'wait'}">${nxtOk?'✓ Next dose available now':'⏱ Next from '+ft(nxt)+' '+fd(nxt)}</div>`:""}
+          </div>
+        </div>`;
+      }).join("");
+      const over=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span class="lbl">Paracetamol · ${total24}mg in last 24h</span>
+        <button class="med-rst" onclick="clearMedDoses('${med.id}')">Clear</button>
+      </div>`;
+      const warn=dailyLeft<1000&&dailyLeft>0?`<div class="badge badge-med-warn" style="margin-top:8px"><span class="ic">⚠️</span><span>Only ${dailyLeft}mg remaining in your 24h limit (${med.daily_max_mg}mg max).</span></div>`:"";
+      const hit=dailyLeft<=0?`<div class="badge badge-med-warn" style="margin-top:8px"><span class="ic">🚫</span><span>Daily limit of ${med.daily_max_mg}mg reached. No more doses in 24h window.</span></div>`:"";
+      medcard+=`<div class="card">${over}${rows}${warn}${hit}</div>`;
+    }
+  }
+
   const wmin=S.wu==="kg"?40:88, wmax=S.wu==="kg"?120:265;
   let whtml=`<div class="stg">
     <button class="stg-btn" onclick="tw()">⚖️ Your weight: ${dw}${S.wu} <span class="ar">${S.wt?"▲":"▼"}</span></button>
     ${S.wt?`<div class="wslider"><input type="range" min="${wmin}" max="${wmax}" value="${dw}" oninput="sw(this.value)"><div class="utog"><button class="ubtn ${S.wu==='kg'?'on':''}" onclick="su('kg')">kg</button><button class="ubtn ${S.wu==='lb'?'on':''}" onclick="su('lb')">lb</button></div></div>`:""}
     <p class="stg-hint">Weight affects how quickly alcohol is metabolised</p>
   </div>`;
+
   let ihtml=`<div class="ibox">
     <button class="itog" onclick="ti()"><span>ℹ️</span> How does this work?<span class="ar">${S.info?"▲":"▼"}</span></button>
     ${S.info?`<div class="icontent">
@@ -270,19 +518,67 @@ function R(){
       <p><strong>Planning ahead:</strong> Tap the time on any drink to change it — set a future time to see when you'd be clear.</p>
       <p><strong>Standard drink</strong> = 14g pure alcohol ≈ one 355ml regular beer, one 148ml glass of wine, or one 44ml shot of spirits.</p>
       <p><strong>Pump &amp; dump:</strong> Pumping doesn't remove alcohol faster — it leaves milk as your blood alcohol drops. Only pump for comfort, and discard.</p>
+      <p><strong>Paracetamol:</strong> Considered safe during breastfeeding at recommended doses. Max 4g (8 × 500mg) per 24h, with at least 4 hours between doses.</p>
       <p><strong>Sources:</strong> CDC, LactMed (NIH), Academy of Breastfeeding Medicine. Estimates only — consult your healthcare provider.</p>
     </div>`:""}
   </div>`;
+
+  // Build picker sheet
   let pkhtml="";
   if(S.pk){
-    const btns=P.map(p=>`<button class="pbtn" onclick="ad('${p.n.replace(/'/g,"\\'")}')"><span class="em">${p.e}</span><div class="det"><div class="nm">${p.n}</div><div class="sb">${p.s===1?"1 std drink":p.s+" std drinks"} · ${p.a}% ABV</div></div><span class="pl">+</span></button>`).join("");
-    pkhtml=`<div class="ov" onclick="cp()"><div class="sh" onclick="event.stopPropagation()"><div class="sh-hdr"><h2>What are you having?</h2><button class="sh-close" onclick="cp()">✕</button></div>${btns}</div></div>`;
+    let sheetContent="";
+    if(S.pktab==="drinks"){
+      const btns=P.map(p=>`<button class="pbtn" onclick="ad('${p.n.replace(/'/g,"\\'")}')"><span class="em">${p.e}</span><div class="det"><div class="nm">${p.n}</div><div class="sb">${p.s===1?"1 std drink":p.s+" std drinks"} · ${p.a}% ABV</div></div><span class="pl">+</span></button>`).join("");
+      sheetContent=btns;
+    } else {
+      // Medication tab
+      sheetContent=MEDS.map(med=>{
+        const now2=Date.now();
+        const total24=medTotalMgLast24h(med.id);
+        const nextOk=medNextDoseOk(med.id);
+        const waitMs=nextOk-now2;
+        const dailyLeft=med.daily_max_mg-total24;
+        const header=`<div class="badge badge-med" style="margin-bottom:12px"><span class="ic">${med.e}</span><span>${med.n} — ${med.note}</span></div>`;
+        const dailyBar=total24>0?`<div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--tan);margin-bottom:4px">
+            <span>Today's total</span><span style="font-weight:700;color:${dailyLeft<1000?'var(--med-warn)':'var(--med)'}">${total24}mg / ${med.daily_max_mg}mg</span>
+          </div>
+          <div style="background:var(--border);border-radius:6px;height:6px;overflow:hidden">
+            <div style="background:${dailyLeft<1000?'var(--med-warn)':'var(--med)'};height:100%;width:${Math.min(100,(total24/med.daily_max_mg)*100).toFixed(1)}%;border-radius:6px;transition:width .3s"></div>
+          </div>
+        </div>`:"";
+        const doseBtns=med.doses.map(dose=>{
+          const canTake=canTakeDose(med.id, dose.mg);
+          const hitDailyMax=dailyLeft<dose.mg;
+          let subtitle=dose.sb;
+          if(hitDailyMax){ subtitle=`Daily limit reached`; }
+          else if(!canTake&&waitMs>0){ subtitle=`Next dose in ${fdur(waitMs)}`; }
+          return `<button class="mbtn" onclick="addMedDose('${med.id}',${dose.mg})" ${canTake?'':'disabled'}>
+            <span class="em">${med.e}</span>
+            <div class="det"><div class="nm">${dose.label}</div><div class="sb">${subtitle}</div></div>
+            ${canTake?`<span class="pl">+</span>`:''}
+          </button>`;
+        }).join("");
+        return header+dailyBar+doseBtns;
+      }).join("");
+    }
+
+    pkhtml=`<div class="ov" onclick="cp()"><div class="sh" onclick="event.stopPropagation()">
+      <div class="sh-hdr"><h2>Add</h2><button class="sh-close" onclick="cp()">✕</button></div>
+      <div class="sh-tabs">
+        <button class="sh-tab ${S.pktab==='drinks'?'on':''}" onclick="setTab('drinks')">🍺 Drinks</button>
+        <button class="sh-tab ${S.pktab==='meds'?'on':''}" onclick="setTab('meds')">💊 Medication</button>
+      </div>
+      ${sheetContent}
+    </div></div>`;
   }
+
   document.getElementById("app").innerHTML=`
     <div class="header"><h1>FeedSafe</h1><p>Know when it's safe to breastfeed</p></div>
-    <div class="card">${timer}</div>
+    ${timerSection}
     ${dklist}
-    <button class="add-btn" onclick="op()"><span style="font-size:20px">+</span> Add a drink</button>
+    ${medcard}
+    <button class="add-btn" onclick="op()"><span style="font-size:20px">+</span> Add a drink or medication</button>
     ${whtml}${ihtml}
     <div class="footer">Not medical advice · Consult your healthcare provider</div>
     ${pkhtml}`;
@@ -293,4 +589,5 @@ R();
 setInterval(R, 10000);
 </script>
 <script data-goatcounter="https://feedsafe.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-</body
+</body>
+</html>
